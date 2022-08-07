@@ -1,0 +1,30 @@
+name: Update Checker
+
+on: 
+  repository_dispatch:
+  workflow_dispatch:
+  
+#  push:
+#    branches: 
+#      - master
+
+  schedule:
+    - cron: 0 8 * * TUE,FRI
+
+jobs:
+
+    runs-on: ubuntu-latest
+
+    - name: Clone luci-app-turboacc
+      run: |
+        git remote add -f turboacc https://github.com/immortalwrt/luci.git
+        git config core.sparsecheckout true
+        echo "applications/luci-app-turboacc" >> .git/info/sparse-checkout
+        git pull turboacc master
+
+    - name: Clone dnsforwarder
+      run: |
+        git remote add -f dnsforwarder https://github.com/immortalwrt/packages.git
+        git config core.sparsecheckout true
+        echo "net/dnsforwarder" >> .git/info/sparse-checkout
+        git pull dnsforwarder master
