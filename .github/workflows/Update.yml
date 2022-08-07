@@ -13,8 +13,12 @@ on:
 
 jobs:
 
+  merge:
+
     runs-on: ubuntu-latest
 
+    steps:
+    
     - name: Clone luci-app-turboacc
       run: |
         git remote add -f turboacc https://github.com/immortalwrt/luci.git
